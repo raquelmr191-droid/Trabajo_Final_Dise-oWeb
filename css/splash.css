@@ -11,17 +11,21 @@
 }
 
 .splash::before{
-    content: ""; /* creame las cajas vacias*/
+    content: "";
     position: absolute;
-    inset: 0; /* Ocupa el 100% del ancho y alto */
-    z-index: 3; /* Se pone por encima de la imagen */
-    pointer-events: none; /* MUY IMPORTANTE: Permite hacer clic "a través" de la cuadrícula para que tus enlaces sigan funcionando */
-    background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
-    /* Dibujamos las líneas de 1px en color blanco */
+    inset: 0; 
+    z-index: 3;
+    pointer-events: none; 
     background-image: 
-        linear-gradient(to right, white 1px, transparent 1px),
-        linear-gradient(to bottom, white 1px, transparent 1px);
-    mix-blend-mode: difference;
+        linear-gradient(to right, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    /*Usamos 'vw' y 'vh' en el calc() en lugar de '%'. 
+       Esto evita el error de Firefox/Safari al generar las baldosas. */
+    background-size: 
+        calc(100vw / var(--columnas)) 100%, 
+        100% calc(100vh / var(--filas));
+    /*Le decimos que repita esas baldosas por toda la pantalla */
+    background-repeat: repeat;
 }
 body{
     font-family: "Oxanium", sans-serif;
