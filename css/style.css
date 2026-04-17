@@ -1,0 +1,212 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --columnas: 7;
+    --filas: 5;
+    --rojo:#D71921;
+    --fondoBlanco: rgb(226, 226, 226);
+    --fondoNegro: rgb(37, 37, 37);
+}
+
+body::before {
+    content: ""; /* creame las cajas aunque esten vacias*/
+    position: absolute;
+    inset: 0; /* Ocupa el 100% del ancho y alto */
+    z-index: 4; /* Se pone por encima de la imagen */
+    pointer-events: none; /*Permite hacer clic " través de la cuadrícula para que los enlaces sigan funcionando */
+    background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+    /* Dibujamos las líneas de 1px en color blanco */
+    background-image: 
+        linear-gradient(to right, white 1px, transparent 1px),
+        linear-gradient(to bottom, white 1px, transparent 1px);
+    mix-blend-mode: difference;
+}
+
+body{
+    font-family: "Oxanium", sans-serif;
+    height: 100dvh;
+    display: grid;
+    grid-template-columns: repeat(var(--columnas),1fr);
+    grid-template-rows: repeat(var(--filas),1fr);
+    background-image: url(../img/mano_cascos.avif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+nav a, h2 a{
+    text-decoration: none;
+}
+
+nav a{
+    font-size: 1.5em;
+    color: white;
+    font-weight: 500;
+    transition: all 0.5s;
+}
+
+nav li {
+    list-style: none;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    /* Que aparezca la manita para indicar que son botones */
+    cursor: pointer;
+}
+
+nav a:hover{
+    transform: scale(1.1) translateY(-10px);
+}
+
+nav li:nth-child(1) {
+    grid-column: 7;
+    grid-row: 1; 
+} /* diseño */
+
+nav li:nth-child(2){
+    grid-column: 6;
+    grid-row: 2; 
+} /* especif. */
+nav li:nth-child(3) {
+    grid-column:7;
+    grid-row: 3; 
+}/* sonido */
+nav li:nth-child(4) {
+    grid-column: 6;
+    grid-row: 4; 
+} /* super mic */
+
+h1, nav , nav ul{
+    display: contents;
+    
+}
+h1{
+    font-size: 6em;
+}
+h1 span, h2,nav li{
+    position: relative; /* Obligatorio para que el z-index funcione */
+    z-index: 2; /* Le damos un valor más alto que a los parches*/
+}
+h2{
+    grid-column: var(--columnas);
+    grid-row: var(--filas); 
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente en la celda */
+    align-items: center; 
+    background-color:var(--fondoNegro);
+    box-shadow: inset 2px 2px 3px var(--fondoNegro)
+}
+
+h2 a{
+    color:white;
+    mix-blend-mode: difference;
+}
+
+.e, .a, .r, .tres {
+    /* centrar el contenido dentro de la celda */
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente en la celda */
+    align-items: center;     /* Centrar verticalmente en la celda */
+    /* Y esto ayuda a que el carácter no tenga espacio extra a su alrededor */
+    line-height: 1; 
+    color: var(--fondoNegro); 
+    transition: all 0.5s;
+}
+
+/* 2. Colocamos las letras gigantes*/
+.e { 
+    grid-column: 1; /* Columna 1 */
+    grid-row: 1;    /* Fila 1 */
+    font-weight: 300;
+}
+.a { 
+    grid-column: 2;
+    grid-row: 1; 
+    font-weight: 300;
+}
+.r { 
+    grid-column: 3; 
+    grid-row: 1; 
+    font-weight: 300;
+}
+.tres { 
+    grid-column: 1; 
+    grid-row: 2; 
+    font-weight: 700;
+}
+
+.capa-esmerilada {
+    /* Un fondo blanco casi transparente para dar textura de superficie */
+    background-color: rgba(255, 255, 255, 0.1); 
+    /* Desenfoca lo que hay detras de este elemento */
+    -webkit-backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px); /* Soporte para Safari */
+    /* Lo ponemos por encima del fondo pero por debajo del texto */
+    z-index: 0; 
+    /* El ratón pasa a través para que los textos sigan siendo seleccionables */
+    pointer-events: none; 
+    /* Subrayamos ligeramente el borde defined por el grid general */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    /*Animación de fundido */
+    animation: escaneo 3s ease-in-out forwards;
+}
+
+/* Creamos la animación del fundido */
+@keyframes escaneo {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/*RESPONSIVE (MÓVILES)*/
+@media (max-width: 800px) {
+    /* 1. JS y las líneas se actualizan SOLOS */
+    :root {
+        --columnas: 4;
+        --filas: 8;
+    }
+    nav li {
+        background-color:var(--fondoNegro);
+        box-shadow: inset 2px 2px 3px var(--fondoNegro)
+    }
+    nav a{
+        font-size: 1em;
+    }
+    nav li:nth-child(1) {
+        grid-column: 1;
+        grid-row: 4; 
+    } /* diseño */
+
+    nav li:nth-child(2){
+        grid-column: 2;
+        grid-row: 4; 
+    } /* especif. */
+    nav li:nth-child(3) {
+        grid-column:3;
+        grid-row: 4; 
+    }/* sonido */
+    nav li:nth-child(4) {
+        grid-column: 4;
+        grid-row: 4; 
+    } /* super mic */
+
+    body{
+        background-size: cover;
+        background-position: center;
+    }
+    h1 { font-size: 3em; }
+    h2 { font-size: 1em; }
+
+    /* 3. Reubicamos las letras para que quepan en 4 columnas */
+    .e { grid-column: 1; grid-row: 1; }
+    .a { grid-column: 2; grid-row: 1; }
+    .r { grid-column: 3; grid-row: 1; }
+    .tres { grid-column: 1; grid-row: 2;}
+}
+

@@ -1,0 +1,416 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --columnas: 7;
+    --filas: 5;
+    --rojo:#D71921;
+    --fondoBlanco: rgb(226, 226, 226);
+    --fondoNegro: rgb(27, 27, 27);
+}
+
+.front::before{
+    content: ""; /* creame las cajas vacias*/
+    position: absolute;
+    inset: 0; /* Ocupa el 100% del ancho y alto */
+    z-index: 3; /* Se pone por encima de la imagen */
+    pointer-events: none; /* MUY IMPORTANTE: Permite hacer clic "a través" de la cuadrícula para que tus enlaces sigan funcionando */
+    background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+    /* Dibujamos las líneas de 1px en color blanco */
+    background-image: 
+        linear-gradient(to right, white 1px, transparent 1px),
+        linear-gradient(to bottom, white 1px, transparent 1px);
+    mix-blend-mode: difference;
+}
+.front{
+    font-family: "Oxanium", sans-serif;
+    height: 100dvh;
+    display: grid;
+    grid-template-columns: repeat(var(--columnas),1fr);
+    grid-template-rows: repeat(var(--filas),1fr);
+    background-color:var(--fondoNegro);
+    position: relative;
+    overflow: hidden;
+}
+h2{
+    grid-column: var(--columnas);
+    grid-row: var(--filas); 
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente en la celda */
+    align-items: center; 
+    background-color:var(--fondoNegro);
+    position: relative;
+    z-index: 3; 
+    box-shadow: inset 2px 2px 3px var(--fondoNegro)
+}
+h2 a{
+    text-decoration: none;
+    color: var(--fondoBlanco);
+    mix-blend-mode: difference;
+}
+.background {
+    grid-area: 1/4/6/8;
+    position: relative; 
+    overflow: hidden;
+}
+.background video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.container {
+    position: absolute; /* Se coloca encima de la imagen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    /* Usamos las variables que definiste antes */
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    z-index: 2; /* Por encima de la imagen */
+}
+/* Estilo de cada cuadro individual */
+.box {
+    z-index: 1;
+    background:transparent;
+}
+/* Efecto al pasar el ratón sobre un cuadro */
+.box:hover {
+    background-color: rgba(255, 255, 255, 0.2);;
+    -webkit-backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: escaneo 3s ease-in-out forwards;
+}
+/* Suavizado cuando el ratón sale del cuadro */
+.box:not(:hover) {
+    transition: backdrop-filter 1500ms ease-out;
+}
+/* Animación del movimiento del gradiente */
+@keyframes escaneo {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+.sound{
+    grid-area: 1/1/2/4;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;    
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+.sound p{
+    font-size: 6em;
+    color:var(--fondoBlanco);
+    font-weight: 600;
+    padding: 20px;
+    letter-spacing: 25px;
+    animation-name: deslizar;
+    animation-duration: 7s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+} 
+
+/* 
+.animation{
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}  */
+
+@keyframes deslizar {
+    0% {
+        transform: translateX(500px); 
+    }
+    
+    100% {
+        transform: translateX(-400px); 
+    }
+}
+
+/*====================== BOTONES FRONT ==============================*/
+
+.btnBG{
+    grid-area: 3/1/6/4;
+}
+.btnBG video{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+.text{
+    padding: 0;
+    border: none;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    font-family: "Oxanium", sans-serif;
+}
+.text p{
+    color: var(--fondoBlanco);
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.uno,.dos,.tres,.hiduno,.hiddos{
+    background-color: rgba(27, 27, 27, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+.uno{
+    grid-column: 2;
+    grid-row: 4;
+}
+.dos{
+    grid-column: 1;
+    grid-row: 3;
+}
+.tres{
+    grid-column: 3;
+    grid-row: 3;
+}
+.hiduno{
+    grid-column: 1;
+    grid-row: 5;
+}
+.hiddos{
+    grid-column: 3;
+    grid-row: 5;
+}
+
+
+/*====================== MODAL OCULTO==============================*/
+.modal-esmerilado {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 80vw;
+    height: 80vh;
+    overflow: hidden;
+    /*disposicion*/
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    background-size: calc(100% / 3) calc(100% / 4);
+    /* Dibujamos las líneas usando un blanco con mucha transparencia (0.15) para que sea sutil */
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    /* Aseguramos que la rejilla empiece desde la esquina superior izquierda exacta */
+    background-position: top left; 
+    /*estilos de cristal */
+    background-color: rgba(27, 27, 27, 0.7);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    box-shadow: 2px 2px 25px var(--fondoNegro);
+    border-radius: 12px;
+    z-index: 4;
+    /* Oculto */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.activo {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-esmerilado  img, .modal-esmerilado  video  {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+.modal-esmerilado  p {
+    color: white;
+    mix-blend-mode: difference;
+    padding: 10px;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* ======================== MODAL uno =========================== */
+#modal-uno video{
+    grid-area: 1/1/3/4;
+}
+#modal-uno p:nth-child(2){
+    grid-column: 2;
+    grid-row: 3;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+#modal-uno p:nth-child(3){
+    grid-column: 1;
+    grid-row: 4;
+}
+#modal-uno p:nth-child(4){
+    grid-column: 3;
+    grid-row: 4;
+}
+/* ======================== MODAL DOS =========================== */
+#modal-dos video{
+    grid-area: 1/1/3/4;
+}
+#modal-dos p:nth-child(2){
+    grid-column: 2;
+    grid-row: 3;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+#modal-dos p:nth-child(3){
+    grid-column: 1;
+    grid-row: 4;
+}
+#modal-dos p:nth-child(4){
+    grid-column: 3;
+    grid-row: 4;
+}
+/* ======================== MODAL TRES =========================== */
+#modal-tres video{
+    grid-area: 1/1/3/4;
+    font-weight: 600;
+    font-size: 1.2em;
+
+}
+#modal-tres p:nth-child(2){
+    grid-column: 2;
+    grid-row: 3;
+}
+#modal-tres p:nth-child(3){
+    grid-column: 1;
+    grid-row: 4;
+}
+#modal-tres p:nth-child(4){
+    grid-column: 3;
+    grid-row: 4;
+}
+/* ======================== FOOTER =========================== */
+footer{
+    display: flex ;
+    height: 100px;
+    justify-content: center;
+    background-color: var(--fondoNegro);
+}
+.legal-text {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    color: var(--fondoBlanco);
+    letter-spacing: 1px;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+
+/*=======================RESPONSIVE (MÓVILES)=========================*/
+@media (max-width: 840px) {
+    /* 1. Cambiamos el tablero: Al cambiar esto, el JS y las líneas se actualizan SOLOS */
+    :root {
+        --columnas: 4;
+        --filas: 6;
+    }
+    .front::before {
+        content: ""; 
+        position: fixed;
+        inset: 0; 
+        z-index: 2; 
+        pointer-events: none;
+        background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+        background-image: 
+            linear-gradient(to right, white 0.5px, transparent 1px),
+            linear-gradient(to bottom, white 0.5px, transparent 1px);
+        mix-blend-mode: difference;
+    } 
+    .front{
+        overflow: visible; 
+        height: auto; 
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+    }
+    footer{
+        display: flex ;
+        height:  120px;
+        justify-content: flex-start;
+        background-color: var(--fondoBlanco);
+    }
+    .legal-text {
+        width: 50%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 20px;
+        color: var(--fondoNegro);
+        letter-spacing: 1px;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+    h2{
+        position: fixed; 
+        width:  calc(100%/var(--columnas)) ;
+        height: calc(100%/var(--filas)) ;;
+        bottom: 0;
+        right: 0;
+        font-size: 1em;
+        z-index: 4;
+    }
+    .container,.box{
+        display: none;
+    }
+    .sound p{
+        justify-content: center;
+    }
+    @keyframes deslizar {
+    0% {
+        transform: translateX(310px); 
+    }
+    100% {
+        transform: translateX(-300px);
+    }
+}
+    .modal-esmerilado{
+        position: relative;
+        visibility: visible;
+        opacity: 1; 
+        z-index: 1 ;
+        height: auto;
+        width: 100%; 
+        display: flex;
+        flex-direction: column;
+        top: 0;
+        left: 0;
+        background-color:var(--fondoNegro);
+        box-shadow:none;
+        border-radius: 0;
+        background-image: none;
+        transform: none; 
+        transition: none;
+    }
+    .modal-esmerilado.activo{
+        opacity: 0;
+        visibility: hidden;
+        transform: none;
+    }
+    button,.hiddos,.hiduno,.btnBG{
+        display: none;
+    }
+    .background{
+        height: 300px; 
+    }
+}

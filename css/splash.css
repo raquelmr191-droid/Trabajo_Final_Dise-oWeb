@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --columnas: 7;
+    --filas: 5;
+    --fondoBlanco: rgb(226, 226, 226);
+    --fondoNegro: rgb(27, 27, 27);
+}
+
+.splash::before{
+    content: ""; /* creame las cajas vacias*/
+    position: absolute;
+    inset: 0; /* Ocupa el 100% del ancho y alto */
+    z-index: 3; /* Se pone por encima de la imagen */
+    pointer-events: none; /* MUY IMPORTANTE: Permite hacer clic "a través" de la cuadrícula para que tus enlaces sigan funcionando */
+    background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+    /* Dibujamos las líneas de 1px en color blanco */
+    background-image: 
+        linear-gradient(to right, white 1px, transparent 1px),
+        linear-gradient(to bottom, white 1px, transparent 1px);
+    mix-blend-mode: difference;
+}
+body{
+    font-family: "Oxanium", sans-serif;
+
+}
+/* --- Contenedor Principal (Tu Splash Screen) --- */
+.splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;  /* Coloca "NOTHING" arriba de "K-Design" */
+    justify-content: space-around; 
+    align-items: center;     /* Centra horizontalmente */
+    color: white;
+    background-color: var(--fondoNegro);
+}
+.NOTHING{
+    letter-spacing:15px;
+    font-size: 6em;
+    font-weight: 700;
+    opacity: 0;
+    animation: aparecerDesenfoque 1s ease-out 1s forwards; 
+}
+
+.Kdesign{
+    font-size: 2em;
+    font-weight: 100;
+    opacity: 0; 
+    animation: deslizarAparecer 1s ease-out 2.5s forwards;
+}
+
+.Kdesign span{
+    font-weight: 700;
+}
+
+/* --- Clase que añadiremos con JavaScript --- */
+.ocultar-splash {
+    /* Animación de salida: 1 segundo, acelerando suavemente */
+    animation: desaparecerSplash 1s ease-in forwards;
+}
+
+/* Animación para el primer texto (NOTHING) */
+@keyframes aparecerDesenfoque {
+    0% {
+        opacity: 0;
+        filter: blur(10px); /* Empieza muy borroso */
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0); /* Termina totalmente nítido */
+    }
+}
+/* Animación para el segundo texto (K-Design) */
+@keyframes deslizarAparecer {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(-30px); /* Empieza 30 píxeles más arriba */
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0); /* Termina en su posición normal */
+    }
+}
+/* Animación de salida (Desenfoque y Transparencia) */
+@keyframes desaparecerSplash {
+    0% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(15px); /* Desenfoque final */
+        visibility: hidden; /* Ayuda a que el navegador sepa que ya no se ve */
+    }
+}
+
+
+/*=======================RESPONSIVE (MÓVILES)=========================*/
+@media (max-width: 840px) {
+    /* 1. Cambiamos el tablero: Al cambiar esto, el JS y las líneas se actualizan SOLOS */
+    :root {
+        --columnas: 4;
+        --filas: 6;
+    }
+    .splash::before {
+        content: ""; 
+        position: fixed;
+        inset: 0; 
+        z-index: 2; 
+        pointer-events: none;
+        background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+        background-image: 
+            linear-gradient(to right, white 0.5px, transparent 1px),
+            linear-gradient(to bottom, white 0.5px, transparent 1px);
+        mix-blend-mode: difference;
+    } 
+    .NOTHING{    
+        font-size: 3em;
+        font-weight: 700;
+    }
+    .Kdesign{
+        font-size: 1em;
+    }
+}
+
+
+
+
+

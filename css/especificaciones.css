@@ -1,0 +1,363 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --columnas: 7;
+    --filas: 5;
+    --rojo:#D71921;
+    --fondoBlanco: rgb(226, 226, 226);
+    --fondoNegro: rgb(37, 37, 37);
+}
+body{
+    background-color: var(--fondoNegro);
+}
+body::before {
+    position: fixed;
+    content: ""; /* creame las cajas aunque esten vacias*/
+    inset: 0; /* Ocupa el 100% del ancho y alto */
+    z-index: 2; /* Se pone por encima de la imagen */
+    pointer-events: none; /*Permite hacer clic "a través" de la cuadrícula para que tus enlaces sigan funcionando */
+    background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+    /* Dibujamos las líneas de 1px en color blanco */
+    background-image: 
+        linear-gradient(to right, white 1px, transparent 1px),
+        linear-gradient(to bottom, white 1px, transparent 1px);
+    mix-blend-mode: difference;
+}
+html,body{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: "Oxanium", sans-serif;;
+}
+nav ,nav ul{
+    display: contents;
+}
+
+nav li{
+    list-style: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav li:nth-child(1){
+    grid-column: 2;
+    grid-row: 4;
+}
+nav li:nth-child(2){
+    grid-column: 3;
+    grid-row: 4;
+}
+nav li:nth-child(3){
+    grid-column: 5;
+    grid-row: 4;
+}
+nav li:nth-child(4){
+    grid-column: 6;
+    grid-row: 4;
+}
+
+nav a{
+    display: block; /* acordarse de que el enlace no es elemento block, si no inline por eso ponemos esto*/
+    color: var(--fondoBlanco);
+    text-decoration:none;
+}
+
+section{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(var(--columnas),auto);
+    grid-template-rows: repeat(var(--filas),auto);
+}
+section img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+section p,h1{
+    padding:20px;
+    color: var(--fondoBlanco);
+}
+.arrow{
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    padding: 15px;
+    z-index: 2;
+    mix-blend-mode: difference;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.arrow svg{
+    height: 50px;
+    width: 50px;    
+    stroke: white; 
+    transition:all 0.3s ease; 
+}
+
+.arrow:hover svg {
+    transform: scale(1.2) translateY(-3px);
+}
+
+/*====================SECCION INICIO======================*/
+#inicio{
+    height: 100dvh;
+    display: grid;
+    grid-template-columns: repeat(var(--columnas),1fr);
+    grid-template-rows: repeat(var(--filas),1fr);
+    color: var(--fondoBlanco);
+}
+
+.portada{
+    grid-area: 1/1/3/8;
+    background-image:url(../img/cascos.avif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top -130px center;;
+    box-shadow: inset 0 -4px 10px black;
+}
+
+#inicio h1{
+    grid-area: 3/1/4/8;
+    text-align:center ;
+    align-self: center;
+    font-size: 3em;
+    font-weight: 600;
+    color: var(--fondoBlanco);
+
+}
+
+#dimensiones p,
+    #bateria p,
+    #contenido p,
+    #controles p{
+        font-size: 1em;
+        font-weight: 200;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+#dimensiones p span,
+    #bateria p span,
+    #contenido p span,
+    #controles p span{
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+/*=====================SECCION DIMENSIONES========================*/
+#dimensiones img:nth-child(2){
+    grid-area: 1/5/3/8 ;
+}
+#dimensiones img:nth-child(4){
+    grid-area: 3/5/6/8 ;
+}
+#dimensiones h1{
+    grid-area: 1/1/2/4 ;
+    font-size: 5em;
+}
+#dimensiones p:nth-child(3){
+    grid-area: 2/1/3/5 ;
+}
+#dimensiones p:nth-child(5){
+    grid-area: 4/1/5/5 ;
+}
+
+/*=====================SECCION BATERIA========================*/
+#bateria h1{
+    grid-area: 1/1/2/4 ;
+    font-size: 5em;
+}
+#bateria p:nth-child(2){
+    grid-area: 2/1/3/5 ;
+}
+#bateria p:nth-child(3){
+    grid-area: 4/1/5/5 ;
+}
+/*=====================SECCION CONTENIDO========================*/
+#contenido img:nth-child(2){
+    grid-area: 1/5/6/8 ;
+}
+#contenido h1{
+    grid-area: 1/1/2/4 ;
+    font-size: 5em;
+}
+#contenido p{
+    grid-area: 2/1/5/5 ;
+    align-self: center;
+}
+
+/*=====================SECCION CONTROLES========================*/
+#controles img:nth-child(2){
+    grid-area: 1/5/6/8 ;
+}
+#controles h1{
+    grid-area: 1/1/2/4 ;
+    font-size: 5em;
+}
+#controles p:nth-child(3){
+    grid-area: 2/1/3/5 ;
+}
+#controles p:nth-child(4){
+    grid-area: 3/1/4/5 ;
+}
+#controles p:nth-child(5){
+    grid-area: 4/1/5/5 ;
+}
+#controles p:nth-child(6){
+    grid-area: 5/1/6/5 ;
+}
+
+h2{
+    position: fixed; 
+    bottom: 0;
+    right: 0;
+    width:  calc(100%/var(--columnas)) ;
+    height: calc(100%/var(--filas)) ;;
+    font-size: 1em;
+    z-index: 4;
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente en la celda */
+    align-items: center; 
+    background-color:var(--fondoBlanco);
+    box-shadow: inset 2px 2px 3px black;
+    /* mix-blend-mode: difference; */
+}
+
+h2 a{
+    text-decoration: none;
+    color: var(--fondoBlanco);
+    mix-blend-mode: difference;
+    font-size: 1.2em;
+}
+
+footer{
+    display: flex;
+    height: 200px;
+    background-color: var(--fondoBlanco);
+    box-shadow: inset 0 4px 10px black;
+}
+
+footer .legal-text {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    font-size: 10px;
+    color: var(--fondoNegro);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Estado inicial: invisible y un poco más abajo */
+.revelar {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out; /* Duración y suavidad del efecto */
+}
+
+/* Estado cuando el elemento entra en pantalla */
+.revelar.activo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* retraso para que los párrafos aparezcan después del título */
+section p.revelar {
+    transition-delay: 0.4s;
+}
+
+section img.revelar {
+    transition-delay: 0.6s;
+}
+
+@media (max-width: 840px) {
+    /* 1. Cambiamos el tablero: Al cambiar esto, el JS y las líneas se actualizan SOLOS */
+    :root {
+        --columnas: 4;
+        --filas: 6;
+    }
+
+    body::before {
+        content: ""; 
+        position: fixed;
+        inset: 0; 
+        z-index: 2; 
+        pointer-events: none;
+        background-size: calc(100%/var(--columnas)) calc(100%/var(--filas));
+        background-image: 
+            linear-gradient(to right, white 0.5px, transparent 1px),
+            linear-gradient(to bottom, white 0.5px, transparent 1px);
+        mix-blend-mode: difference;
+    } 
+    .portada{
+        grid-area: 1/1/3/5;
+        background-position:center;
+    }
+    #inicio{
+        height: 100dvh;
+        display: grid;
+        grid-template-columns: repeat(var(--columnas),1fr);
+        grid-template-rows: repeat(var(--filas),1fr);
+    }
+    #inicio h1{
+        grid-area: 3/1/4/5;
+        padding: 20px;
+        text-align:center ;
+        font-size: 2em;
+        font-weight: 600;
+        color: var(--fondoBlanco);
+    }
+
+    nav li:nth-child(1){
+        grid-column: 1;
+        grid-row: 4;
+    }
+    nav li:nth-child(2){
+        grid-column: 2;
+        grid-row: 4;
+    }
+    nav li:nth-child(3){
+        grid-column: 3;
+        grid-row: 4;
+    }
+    nav li:nth-child(4){
+        grid-column: 4;
+        grid-row: 4;
+    }
+
+    #dimensiones h1,
+    #bateria h1,
+    #contenido h1,
+    #controles h1{
+        font-size: 2em; 
+    }
+    
+    #dimensiones p,
+    #bateria p,
+    #contenido p,
+    #controles p{
+        font-size: 1em;
+    }
+    section{
+        min-height: 0;
+        height: auto;
+        display: flex;
+        flex-direction: column
+    }
+
+    section img{
+        padding:20px 0 20px;;
+        height: 40%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+}
