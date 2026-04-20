@@ -7,7 +7,7 @@ const textWhite = document.querySelector(".white p")
 const textBlack = document.querySelector(".black p")
 const front = document.querySelector(".front")
 const imgWhiteG = document.querySelector(".background img")
-const imgWhiteCascos = document.querySelector(".materiales img")
+const imgWhiteCascos = document.querySelector(".uno img")
 const modalEsmerialdo = document.querySelectorAll(".modal-esmerilado")
 const h2 = document.querySelector("h2")
 
