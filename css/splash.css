@@ -31,7 +31,7 @@ body{
     font-family: "Oxanium", sans-serif;
 
 }
-/* --- Contenedor Principal (Tu Splash Screen) --- */
+/* --- Contenedor Principal (Splash Screen) --- */
 .splash {
     position: fixed;
     top: 0;
@@ -40,9 +40,9 @@ body{
     height: 100vh;
     z-index: 3;
     display: flex;
-    flex-direction: column;  /* Coloca "NOTHING" arriba de "K-Design" */
+    flex-direction: column; 
     justify-content: space-around; 
-    align-items: center;     /* Centra horizontalmente */
+    align-items: center;
     color: white;
     background-color: var(--fondoNegro);
 }
@@ -65,9 +65,7 @@ body{
     font-weight: 700;
 }
 
-/* --- Clase que añadiremos con JavaScript --- */
 .ocultar-splash {
-    /* Animación de salida: 1 segundo, acelerando suavemente */
     animation: desaparecerSplash 1s ease-in forwards;
 }
 
@@ -111,7 +109,6 @@ body{
 
 /*=======================RESPONSIVE (MÓVILES)=========================*/
 @media (max-width: 840px) {
-    /* 1. Cambiamos el tablero: Al cambiar esto, el JS y las líneas se actualizan SOLOS */
     :root {
         --columnas: 4;
         --filas: 6;
@@ -129,7 +126,7 @@ body{
         mix-blend-mode: difference;
     } 
     .NOTHING{    
-        font-size: 3em;
+        font-size: 1.5em;
         font-weight: 700;
     }
     .Kdesign{
